@@ -1,0 +1,916 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TransportMap Login</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: #f1f5f9;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ================= LEFT SIDE ================= */
+
+        .map-section {
+            width: 55%;
+            min-height: 100vh;
+
+            background:
+                linear-gradient(rgba(8, 47, 73, 0.78),
+                rgba(8, 47, 73, 0.88)),
+                url("https://images.unsplash.com/photo-1524666041070-9cffc2b8b8c0?auto=format&fit=crop&w=1200&q=80");
+
+            background-size: cover;
+            background-position: center;
+
+            color: white;
+
+            padding: 45px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* LOGO */
+
+        .logo {
+            font-size: 27px;
+            font-weight: bold;
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo i {
+            font-size: 34px;
+            color: #38bdf8;
+        }
+
+        .logo span {
+            color: #38bdf8;
+        }
+
+        /* CONTENT */
+
+        .map-content {
+            max-width: 600px;
+            margin-bottom: 60px;
+        }
+
+        .map-content h1 {
+            font-size: 50px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .map-content p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #e0f2fe;
+        }
+
+        /* TRANSPORT ICONS */
+
+        .transport-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .transport-card {
+            width: 100px;
+            height: 90px;
+
+            border: 1px solid rgba(255,255,255,0.3);
+
+            background: rgba(255,255,255,0.12);
+
+            border-radius: 15px;
+
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+            align-items: center;
+
+            transition: 0.3s;
+        }
+
+        .transport-card:hover {
+            transform: translateY(-7px);
+            background: rgba(255,255,255,0.22);
+        }
+
+        .transport-card i {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .transport-card p {
+            font-size: 13px;
+        }
+
+
+        /* ================= RIGHT SIDE ================= */
+
+        .login-section {
+            width: 45%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: white;
+
+            padding: 30px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .login-box h2 {
+            font-size: 34px;
+            color: #102a43;
+
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+        }
+
+
+        /* ================= INPUT ================= */
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+
+            color: #334e68;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .input-box {
+            height: 52px;
+
+            border: 1px solid #d9e2ec;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 15px;
+
+            background: #f8fafc;
+
+            transition: 0.3s;
+        }
+
+        .input-box:focus-within {
+            border-color: #0284c7;
+
+            box-shadow:
+                0 0 0 3px rgba(2,132,199,0.1);
+
+            background: white;
+        }
+
+        .input-box > i {
+            color: #829ab1;
+            margin-right: 12px;
+        }
+
+        .input-box input {
+            width: 100%;
+
+            border: none;
+
+            outline: none;
+
+            background: transparent;
+
+            font-size: 15px;
+        }
+
+        /* PASSWORD EYE */
+
+        .eye-button {
+            border: none;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+        /* ERROR */
+
+        .error {
+            display: block;
+
+            color: #dc2626;
+
+            font-size: 12px;
+
+            margin-top: 5px;
+        }
+
+
+        /* ================= OPTIONS ================= */
+
+        .options {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin: 10px 0 25px;
+
+            font-size: 13px;
+        }
+
+        .remember {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #64748b;
+        }
+
+        .remember input {
+            accent-color: #0284c7;
+        }
+
+        .forgot {
+            color: #0284c7;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= LOGIN BUTTON ================= */
+
+        .login-button {
+            width: 100%;
+
+            height: 52px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #0284c7;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .login-button:hover {
+            background: #0369a1;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* ================= DIVIDER ================= */
+
+        .divider {
+            display: flex;
+
+            align-items: center;
+
+            margin: 28px 0;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+
+            height: 1px;
+
+            background: #e2e8f0;
+
+            flex: 1;
+        }
+
+        .divider span {
+            padding: 0 15px;
+        }
+
+
+        /* ================= GOOGLE ================= */
+
+        .google-button {
+            width: 100%;
+
+            height: 50px;
+
+            background: white;
+
+            border: 1px solid #d9e2ec;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            color: #334e68;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 12px;
+
+            transition: 0.3s;
+        }
+
+        .google-button:hover {
+            background: #f8fafc;
+        }
+
+        .google-button i {
+            font-size: 18px;
+        }
+
+
+        /* ================= SIGN UP ================= */
+
+        .signup {
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #718096;
+
+            font-size: 14px;
+        }
+
+        .signup a {
+            color: #0284c7;
+
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+
+        /* SUCCESS MESSAGE */
+
+        #message {
+            text-align: center;
+
+            margin-top: 15px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 800px) {
+
+            .container {
+                display: block;
+            }
+
+            .map-section {
+                width: 100%;
+                min-height: 350px;
+
+                padding: 30px;
+            }
+
+            .login-section {
+                width: 100%;
+
+                min-height: 600px;
+            }
+
+            .map-content h1 {
+                font-size: 36px;
+            }
+        }
+
+
+        @media (max-width: 500px) {
+
+            .map-section {
+                min-height: 300px;
+            }
+
+            .map-content p {
+                font-size: 15px;
+            }
+
+            .transport-card {
+                width: 75px;
+                height: 70px;
+            }
+
+            .transport-card i {
+                font-size: 20px;
+            }
+
+            .login-section {
+                padding: 20px;
+            }
+
+            .login-box h2 {
+                font-size: 28px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <div class="container">
+
+
+        <!-- ================= MAP / TRANSPORT ================= -->
+
+        <section class="map-section">
+
+            <div class="logo">
+                <i class="fa-solid fa-location-dot"></i>
+                Transport<span>Map</span>
+            </div>
+
+
+            <div class="map-content">
+
+                <h1>
+                    Travel Smarter.<br>
+                    Explore Further.
+                </h1>
+
+                <p>
+                    Find the best routes, track transportation,
+                    explore locations and plan your journey easily.
+                </p>
+
+
+                <div class="transport-icons">
+
+                    <div class="transport-card">
+                        <i class="fa-solid fa-bus"></i>
+                        <p>Bus</p>
+                    </div>
+
+                    <div class="transport-card">
+                        <i class="fa-solid fa-train"></i>
+                        <p>Train</p>
+                    </div>
+
+                    <div class="transport-card">
+                        <i class="fa-solid fa-car"></i>
+                        <p>Car</p>
+                    </div>
+
+                    <div class="transport-card">
+                        <i class="fa-solid fa-person-walking"></i>
+                        <p>Walk</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= LOGIN ================= -->
+
+        <section class="login-section">
+
+            <div class="login-box">
+
+                <h2>Welcome Back! 👋</h2>
+
+                <p class="subtitle">
+                    Login to continue your journey.
+                </p>
+
+
+                <form id="loginForm">
+
+
+                    <!-- EMAIL -->
+
+                    <div class="input-group">
+
+                        <label>Email Address</label>
+
+                        <div class="input-box">
+
+                            <i class="fa-solid fa-envelope"></i>
+
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="Enter your email"
+                            >
+
+                        </div>
+
+                        <span
+                            class="error"
+                            id="emailError">
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="input-group">
+
+                        <label>Password</label>
+
+                        <div class="input-box">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Enter your password"
+                            >
+
+                            <button
+                                type="button"
+                                class="eye-button"
+                                id="togglePassword">
+
+                                <i class="fa-solid fa-eye"></i>
+
+                            </button>
+
+                        </div>
+
+                        <span
+                            class="error"
+                            id="passwordError">
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- OPTIONS -->
+
+                    <div class="options">
+
+                        <label class="remember">
+
+                            <input
+                                type="checkbox"
+                                id="remember"
+                            >
+
+                            Remember me
+
+                        </label>
+
+
+                        <a
+                            href="#"
+                            class="forgot"
+                            id="forgotPassword">
+
+                            Forgot Password?
+
+                        </a>
+
+                    </div>
+
+
+
+                    <!-- LOGIN -->
+
+                    <button
+                        type="submit"
+                        class="login-button">
+
+                        Login
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+                </form>
+
+
+
+                <!-- DIVIDER -->
+
+                <div class="divider">
+
+                    <span>OR</span>
+
+                </div>
+
+
+
+                <!-- GOOGLE -->
+
+                <button
+                    class="google-button"
+                    id="googleLogin">
+
+                    <i class="fa-brands fa-google"></i>
+
+                    Continue with Google
+
+                </button>
+
+
+
+                <!-- SIGN UP -->
+
+                <p class="signup">
+
+                    Don't have an account?
+
+                    <a
+                        href="#"
+                        id="signupLink">
+
+                        Create Account
+
+                    </a>
+
+                </p>
+
+
+                <!-- MESSAGE -->
+
+                <p id="message"></p>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        // Get elements
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const email =
+            document.getElementById("email");
+
+        const password =
+            document.getElementById("password");
+
+        const emailError =
+            document.getElementById("emailError");
+
+        const passwordError =
+            document.getElementById("passwordError");
+
+        const message =
+            document.getElementById("message");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+
+
+        // ==============================
+        // SHOW / HIDE PASSWORD
+        // ==============================
+
+        togglePassword.addEventListener("click", function () {
+
+            if (password.type === "password") {
+
+                password.type = "text";
+
+                togglePassword.innerHTML =
+                    '<i class="fa-solid fa-eye-slash"></i>';
+
+            } else {
+
+                password.type = "password";
+
+                togglePassword.innerHTML =
+                    '<i class="fa-solid fa-eye"></i>';
+
+            }
+
+        });
+
+
+
+        // ==============================
+        // LOGIN VALIDATION
+        // ==============================
+
+        loginForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+
+            // Clear old messages
+
+            emailError.textContent = "";
+            passwordError.textContent = "";
+            message.textContent = "";
+
+
+            let valid = true;
+
+
+            // Email validation
+
+            const emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+            if (email.value.trim() === "") {
+
+                emailError.textContent =
+                    "Please enter your email.";
+
+                valid = false;
+
+            }
+
+            else if (!emailPattern.test(email.value.trim())) {
+
+                emailError.textContent =
+                    "Please enter a valid email.";
+
+                valid = false;
+
+            }
+
+
+
+            // Password validation
+
+            if (password.value.trim() === "") {
+
+                passwordError.textContent =
+                    "Please enter your password.";
+
+                valid = false;
+
+            }
+
+            else if (password.value.length < 6) {
+
+                passwordError.textContent =
+                    "Password must contain at least 6 characters.";
+
+                valid = false;
+
+            }
+
+
+
+            // Login success
+
+            if (valid) {
+
+                message.style.color = "#16a34a";
+
+                message.textContent =
+                    "✓ Login successful! Welcome to TransportMap.";
+
+                // For a real project you can redirect:
+                // window.location.href = "dashboard.html";
+
+            }
+
+        });
+
+
+
+        // ==============================
+        // FORGOT PASSWORD
+        // ==============================
+
+        document
+            .getElementById("forgotPassword")
+            .addEventListener("click", function (event) {
+
+                event.preventDefault();
+
+                alert(
+                    "Password reset functionality will be connected here."
+                );
+
+            });
+
+
+
+        // ==============================
+        // GOOGLE LOGIN
+        // ==============================
+
+        document
+            .getElementById("googleLogin")
+            .addEventListener("click", function () {
+
+                alert(
+                    "Google authentication will be connected here."
+                );
+
+            });
+
+
+
+        // ==============================
+        // CREATE ACCOUNT
+        // ==============================
+
+        document
+            .getElementById("signupLink")
+            .addEventListener("click", function (event) {
+
+                event.preventDefault();
+
+                alert(
+                    "Registration page will open here."
+                );
+
+            });
+
+    </script>
+
+</body>
+</html>
+```
